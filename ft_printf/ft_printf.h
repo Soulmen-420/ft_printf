@@ -26,6 +26,6 @@
 //necesairy functions for ft_printf
 
     int     ft_printf(const char *restrict format, ...);
-    char    ft_printf_char(const char *restrict chr, char *buffer);
+    void    ft_printf_char(char *buffer);
 
 #endif

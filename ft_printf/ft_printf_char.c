@@ -1,12 +1,10 @@
 #include "ft_printf.h"
 
-char        ft_printf_char(const char *restrict chr, char *buffer)
+void        ft_printf_char(char *buffer)
 {
-    int i = 0;
-    buffer[i] = chr[i];
-//    while(buffer[i] != '\0'){
-        ft_putchar(buffer[i]);
-//        i++;
-//    }    
-    return(i);
+//    printf("\nHello ft_printf_char %d\n", i);
+       printf("charbuffer: %s\n", buffer);
+//    ft_putchar(buffer[0]);
+//    printf("\n");
+//    ft_putchar('\n');
 }

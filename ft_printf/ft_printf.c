@@ -1,18 +1,15 @@
 #include "ft_printf.h"
 
-int     ft_format_finder(const char *restrict format, char *buffer)
+int     ft_format_finder(const char *restrict format, va_list arg)
 {
-    char format_array[] = {'c', 'd', 'i', 'f', 'o', 's', 'u', 'x', 'X', 'p', '\0'};
+    char *format_array[] = {"%c", "%d", "%i", "%f", "%o", "%s", "%u", "%x", "%X", "%p"};
     int a = 0;
     while(format_array[a]){
-        if(*format == format_array[a]){
-            if(format_array[a] == 'c'){
-                format += 1;
-                ft_printf_char(format, buffer);
-                return(format_array[a]);
-            }
-            printf("%s\n", format);
-            return(format_array[a]);
+        if(format[a] == *format_array[0]){
+            char buffer = va_arg(arg, int);
+            ft_printf_char(&buffer);
+            printf("format finder format :%s\n", format_array[a]);
+            return(1);
         }
         a++;
     }
@@ -23,41 +20,34 @@ int     ft_printf(const char *restrict format, ...)
 {
     va_list arg;
     int count = 0;
-    unsigned int i = 0;
-    char buffer[BUFF_SIZE];
+    int arg_len = 0;
 
     va_start(arg, format);
-    while(!*format){
+    arg_len = ft_strlen(format);
+    printf("arg len: %d\n", arg_len);
+    while(*format){
         if(*format == '%'){
-            format += 1;
-            if((!*format) || (ft_format_finder(format, buffer) <= 0)){
+            if((!*format) || (ft_format_finder(format, arg) <= 0)){
                 break;
             } else {
-                
-                printf("format in ascii = %d\n", ft_format_finder(format, buffer));
-                
+                printf("\nformat in ascii = %d\n\n", ft_format_finder(format, arg));
+                break;
             }
-        } 
-        else if(*format) 
-        {
-            ft_printf_string(buffer);
-            return(0)
+        } else if(count == arg_len){
+            printf("max count: %s\n", format);
+            return(0);
         }
-        buffer[i] = format[i];
-        i++;
+        count++;
     }
     va_end(arg);
-    printf("count = %d\n", count);
-    printf("buffer = %s\n", buffer);
-    
     return(count);
 }
 
 
 int     main(void)
 {
+   ft_printf("%c", "h");
     printf("main count = %d\n", ft_printf("hello\n", "bye\n"));
-    ft_printf("%c", "h");
 //    ft_printf("Hello\n" "bye\n"); 
     return(0);
 }
